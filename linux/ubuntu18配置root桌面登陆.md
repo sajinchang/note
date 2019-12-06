@@ -1,4 +1,4 @@
-# ubuntu18 配置桌面root登陆
+# ubuntu18 配置桌面 root 登陆
 
 ## 打开配置文件
 
@@ -9,13 +9,13 @@ sudo vim /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 greeter-show-manual-login=true
 ```
 
-## 设置root密码
+## 设置 root 密码
 
 ```shell
 sudo passwd root
 ```
 
-## 打开/root/.profile文件
+## 打开 /root/.profile 文件
 
 ```shell
 vim /root/.profile
@@ -24,7 +24,7 @@ vim /root/.profile
 tty -s && mesg n || true
 ```
 
-## root使用音频设备
+## root 使用音频设备
 
 ```shell
 vim /etc/profile
@@ -33,7 +33,7 @@ vim /etc/profile
 pulseaudio --start --log-target=syslog
 ```
 
-##　注释pam.d下的文件
+## 注释 pam.d 下的文件
 
 ```shell
 sudo vim /etc/pam.d/gdm-autologin
@@ -45,4 +45,4 @@ sudo vim /etc/pam.d/gdm-password
 "auth requied pam_succeed_if.so user != root quiet success"
 ```
 
-==**然后可以进行root登陆了**==
+==**然后可以进行 root 登陆了**==

@@ -23,7 +23,7 @@ systemctl list-unit-files | grep enabled
 systemctl --failed
 ```
 
-##　 firewall 配置
+## firewall 配置
 
 ``` shell
 # 查看版本
@@ -64,4 +64,3 @@ firewall-cmd --get-services
 # 查看所有打开的端口
 firewall-cmd --zone=public --list-ports
 ```
-
