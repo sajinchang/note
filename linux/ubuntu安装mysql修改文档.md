@@ -1,0 +1,1 @@
+# ubuntu 安装mysql完修改密码
