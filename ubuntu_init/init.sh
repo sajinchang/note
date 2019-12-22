@@ -4,7 +4,7 @@
 
 read -s -p "enter the sudo password:" PASSWORD
 
-# sudo app-key -adv --keyserver kerserver.ubuntu.com KEY
+# sudo app-key -adv --recv --keyserver kerserver.ubuntu.com KEY
 
 system_update() {
     echo "系统更新"
