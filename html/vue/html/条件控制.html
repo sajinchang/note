@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+
+<body>
+
+    <div id='div1'>
+        <button @click="toggle">选择什么英雄</button>
+        <div v-if='number > 90'>盖伦</div>
+        <div v-else-if='number > 80'>艾希</div>
+        <div v-else-if='number > 70'>亚索</div>
+        <div v-else-if='number > 60'>剑圣</div>
+        <div v-else-if='number > 50'>狗头</div>
+        <div v-else-if='number > 40'>妖姬</div>
+        <div v-else-if='number > 30'>机器人</div>
+        <div v-else>vn</div>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#div1',
+        data: {
+            number: 0
+        },
+        methods: {
+            toggle: function () {
+                this.number = Math.random() * 100;
+            }
+        }
+    })
+</script>
+
+</html>

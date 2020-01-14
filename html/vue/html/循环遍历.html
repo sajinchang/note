@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.min.js"></script>
+    <style>
+        #div1 {
+            text-align: center;
+        }
+
+        table tr td {
+            border: 1px solid gray;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='div1'>
+
+
+        <table>
+            <tr>
+                <td>索引</td>
+                <td>name</td>
+                <td>hp</td>
+            </tr>
+            <!-- <tr v-for='hero in heros'> -->
+            <tr v-for='hero, index in heros'>
+                <td>{{ index }}</td>
+                <td>{{ hero.name }}</td>
+                <td>{{ hero.hp }}</td>
+            </tr>
+        </table>
+
+    </div>
+    <div id='div2'>
+        重数字遍历
+        <div v-for="i in 10">
+            {{i}}
+        </div>
+    </div>
+</body>
+<script>
+    var data = [{
+            name: "盖伦",
+            hp: 341
+        },
+        {
+            name: "提莫",
+            hp: 225
+        },
+        {
+            name: "安妮",
+            hp: 427
+        },
+        {
+            name: "死歌",
+            hp: 893
+        }
+    ];
+    new Vue({
+        el: '#div1',
+        data: {
+            heros: data
+        },
+
+    })
+
+    new Vue({
+        el: '#div2'
+    })
+</script>
+
+</html>
