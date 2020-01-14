@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/vue.min.js"></script>
+    <style>
+        table tr td {
+            border: 1px solid gray;
+            padding: 10px;
+
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 800px;
+            table-layout: fixed;
+        }
+
+        tr.firstLine {
+            background-color: lightGray;
+        }
+    </style>
+</head>
+<!-- vue 可以通过watch监听属性值的变化 -->
+
+<body>
+    <div id="div1">
+
+        <table align="center">
+            <tr class="firstLine">
+                <td>人民币</td>
+                <td>美元</td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2">
+                    汇率： <input type="number" v-model.number="exchange" />
+                </td>
+            </tr>
+
+            <tr>
+
+                <td align="center">
+                    ￥: <input type="number" v-model.number="rmb" />
+                </td>
+                <td align="center">
+                    $: <input type="number" v-model.number="dollar" />
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#div1',
+        data: {
+            exchange: 6.4,
+            rmb: 0,
+            dollar: 0
+        },
+        watch: {
+            rmb: function (val) {
+                this.rmb = val;
+                this.dollar = this.rmb / this.exchange;
+            },
+            dollar: function (val) {
+                this.dollar = val;
+                this.rmb = this.exchange * this.dollar;
+            }
+        }
+    })
+</script>
+
+</html>

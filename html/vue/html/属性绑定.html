@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>属性绑定</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+
+<body>
+<div id="div1">
+    <!-- 属性绑定 v-bind: 简写为 :href -->
+    <!-- <a v-bind:href="url" target="_target">跳转</a> -->
+    <a :href="url" target="_target">跳转</a>
+</div>
+</body>
+<script>
+new Vue({
+    el: '#div1',
+    data: {
+        url: 'https://www.baidu.com'
+    },
+
+})
+</script>
+
+</html>

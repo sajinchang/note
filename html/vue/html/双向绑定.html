@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>双向绑定</title>
+    <script src="../js/vue.min.js"></script>
+    <style>
+        table tr td {
+            border: 1px solid gray;
+            padding: 10px;
+
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 800px;
+            table-layout: fixed;
+        }
+
+        tr.firstLine {
+            background-color: lightGray;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">
+
+        <table align="center">
+            <tr class="firstLine">
+                <td>视图类型</td>
+                <td>输入数据</td>
+                <td>绑定到Vue上的数值</td>
+            </tr>
+            <tr>
+
+                <td>
+                    单行文本
+                </td>
+                <td>
+                    <input v-model.lazy="input" placeholder="输入数据">
+                </td>
+                <td>
+                    <p>{{ input }}</p>
+                </num
+            </tr>
+             <tr>
+                <td>
+                    数字
+                </td>
+                <td>
+                    <input v-model.number="num" placeholder="输入数据">
+                </td>
+                <td>
+                    <p>{{ num }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    多行文本
+                </td>
+                <td>
+                    <textarea v-model.trim="textarea" placeholder="输入数据"></textarea>
+                </td>
+                <td>
+                    <p>"{{ textarea }}"</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    单个复选框
+                </td>
+                <td>
+                    <input type="checkbox" id="checkbox" v-model="checked">
+                </td>
+                <td>
+                    <p>{{ checked }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    多个复选框
+                </td>
+                <td>
+                    <input type="checkbox" id="teemo" value="teemo" v-model="checkedes">
+                    <label for="teemo">teemo</label>
+                    <input type="checkbox" id="gareen" value="gareen" v-model="checkedes">
+                    <label for="gareen">gareen</label>
+                    <input type="checkbox" id="annie" value="annie" v-model="checkedes">
+                    <label for="annie">annie</label>
+                </td>
+                <td>
+                    <p>{{ checkedes }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    单选按钮
+                </td>
+                <td>
+                    <input type="radio" id="one" value="One" v-model="radio">
+                    <label for="one">One</label>
+                    <br>
+                    <input type="radio" id="two" value="Two" v-model="radio">
+                    <label for="two">Two</label>
+                </td>
+                <td>
+                    <p>{{ radio }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    单选选择框
+                </td>
+                <td>
+                    <select v-model="selected" size="5">
+                        <option disabled value="">请选择</option>
+                        <option>AD</option>
+                        <option>AC</option>
+                        <option>ADC</option>
+                    </select>
+                </td>
+                <td>
+                    <p>{{ selected }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    多选选择框
+                </td>
+                <td>
+                    (通过ctrl或者shift进行多选)<br>
+                    <select v-model="selecteds" multiple size="5">
+                        <option disabled value="">请选择</option>
+                        <option>AD</option>
+                        <option>AC</option>
+                        <option>ADC</option>
+                    </select>
+                </td>
+                <td>
+                    <p>{{ selecteds }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    单个复选框
+                </td>
+                <td>
+                    默认值是true或者false,也可以修改为自定义的值<br>
+                    <input type="checkbox" id="toggle" true-value="yes" false-value="no" v-model="toggle">
+                </td>
+                <td>
+                    <p>{{ toggle }}</p>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#div1',
+        data: {
+            input: '',
+            num: 0,
+            textarea: '',
+            checked: '',
+            checkedes: [],
+            radio: '',
+            selected: '',
+            selecteds: [],
+            toggle: '',
+
+        }
+    })
+</script>
+
+</html>

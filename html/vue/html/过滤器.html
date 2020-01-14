@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>过滤器</title>
+    <script src="../js/vue.min.js"></script>
+    <style>
+        table {
+            text-align: center;
+            border-collapse: collapse;
+            width: 800px;
+            table-layout: fixed;
+        }
+
+        td {
+            text-align: center;
+            border: 1px solid gray;
+            padding: 10px;
+        }
+
+        .first-line {
+            background-color: lightcyan;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">
+        <table>
+            <tr class="first-line">
+                <td>
+                    输入数据
+                </td>
+                <td>
+                    过滤后的结果
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" v-model="data">
+                </td>
+                <td>
+                    {{ data | capitalize | capitalizeLastLetter }}
+                </td>
+
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+    // 全局过滤器
+    Vue.filter('capitalizeLastLetter', function (value) {
+        if (!value) {
+            return ''
+        }
+        value = value.toString();
+        return value.substring(0, value.length - 1) + value.charAt(value.length - 1).toUpperCase();
+    })
+    new Vue({
+        el: '#div1',
+        data: {
+            data: ''
+
+        },
+        // 多个过滤器
+        filters: {
+            capitalize: function (value) {
+                if (!value) {
+                    return ''
+                }
+                value = value.toString();
+                return value.charAt(0).toUpperCase() + value.slice(1);
+            }
+        }
+    })
+</script>
+
+</html>
