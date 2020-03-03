@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            margin: 50px auto 0;
+            width: 700px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+ <div id="box">
+     <h2>函数内部变量 argments 对象</h2>
+     <hr>
+     <p style="text-indent: 30px;">
+        函数内部变量 argments 对象, 只能在函数内部访问, 保存了所有的实参, 是一个数组.</p>
+ <p style="text-indent: 30px;">
+使用 var 声明的变量提升的会更高(比函数的提升要高), 更容易被覆盖!
+</p>
+    </div>   
+
+</body>
+<script>
+    function add(){
+        var sum = 0
+        for(var i = 0; i < arguments.length; i++){
+            sum += arguments[i]
+        }
+        console.log(sum);
+    }
+
+    add(1, 23, 5);
+</script>
+</html>
