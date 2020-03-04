@@ -30,11 +30,44 @@
 
 <body>
     <div id="box">10</div>
-    <input type="button" id="btn" value="start">
+    <input type="button" id="btn" value="开始">
 </body>
 <script>
-
-
+    // 定义全局变量,防止无法清除计时器
+    var t;
+    var btn = document.getElementById('btn');
+    var box = document.getElementById('box');
+    var sec = box.innerHTML;
+    var num = sec;
+    // flag标志当前的状态, 0为开始, 1为暂停, 2为重置
+    var flag = 0;
+    btn.onclick = function () {
+        if (flag == 0) { // 判断当前点击的状态
+            clearInterval(t);
+            t = setInterval(function () {
+                if (sec <= 1) {
+                    box.innerHTML = 0;
+                    btn.value = "重置";
+                    flag = 2;
+                } else {
+                    sec--;
+                    box.innerHTML = sec;
+                }
+            }, 1000)
+            btn.value = "暂停";
+            flag = 1;
+        } else if (flag == 1) {
+            clearInterval(t);
+            btn.value = '继续';
+            flag = 0;
+        } else {
+            btn.value = "开始";
+            box.innerHTML = num;
+            // 重置计时的秒数
+            sec = num;
+            flag = 0;
+        }
+    }
 </script>
 
 </html>
