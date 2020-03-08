@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>万年历</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        body {
+            background: #f6f9fc;
+            font-family: arial;
+        }
+
+        .calendar {
+            width: 210px;
+            margin: 100px auto;
+            padding: 10px 10px 20px 20px;
+            background-color: #eae9e9;
+        }
+
+        .calendar ul {
+            width: 210px;
+            overflow: hidden;
+            padding-bottom: 10px;
+        }
+
+        .calendar li {
+            float: left;
+            width: 58px;
+            height: 54px;
+            margin: 10px 10px 0 0;
+            border: 1px solid #fff;
+            background-color: #424242;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .calendar li h2 {
+            font-size: 20px;
+            padding-top: 5px;
+        }
+
+        .calendar .active {
+            border: 1px solid #424242;
+            background-color: #fff;
+            color: #e84a7e;
+        }
+
+        .calendar .active p {
+            font-weight: bold;
+        }
+
+        .calendar .text {
+            width: 178px;
+            padding: 0 10px 10px;
+            border: 1px solid #fff;
+            padding-top: 10px;
+            background: #f1f1f1;
+            color: #555;
+        }
+
+        .calendar .text h2 {
+            font-size: 14px;
+            margin-bottom: 10px;
+
+        }
+
+        .calendar .text p {
+            font-size: 12px;
+            line-height: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="tab" class="calendar">
+        <ul id="box">
+            <li class="active">
+                <h2>1<p>JAN</p>
+                </h2>
+            </li>
+            <li>
+                <h2>2</h2>
+                <p>FER</p>
+            </li>
+            <li>
+                <h2>3</h2>
+                <p>MAR</p>
+            </li>
+            <li>
+                <h2>4</h2>
+                <p>APR</p>
+            </li>
+            <li>
+                <h2>5</h2>
+                <p>MAY</p>
+            </li>
+            <li>
+                <h2>6</h2>
+                <p>JUN</p>
+            </li>
+            <li>
+                <h2>7</h2>
+                <p>JUL</p>
+            </li>
+            <li>
+                <h2>8</h2>
+                <p>AUG</p>
+            </li>
+            <li>
+                <h2>9</h2>
+                <p>SEP</p>
+            </li>
+            <li>
+                <h2>10</h2>
+                <p>OCT</p>
+            </li>
+            <li>
+                <h2>11</h2>
+                <p>NOV</p>
+            </li>
+            <li>
+                <h2>12</h2>
+                <p>DEC</p>
+            </li>
+        </ul>
+        <div class="text" id="txt">
+            <h2>1月活动</h2>
+            <p>快过年了，大家可以商量着去哪玩吧～</p>
+        </div>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var arr = ['快过年了，大家可以商量着去哪玩吧～',
+            '大家好好学习吧222222~~~',
+            '大家好好学习吧222222333~~~',
+            '大家好好学习吧222444222~~~',
+            '大家好好学习555吧222222~~~',
+            '大家好好学习吧666222222~~~',
+            '大家好好学习吧227772222~~~',
+            '大家好好学习吧28888822222~~~',
+            '大家好好学习吧99999222222~~~',
+            '大家好好学习10000000吧222222~~~',
+            '大家好好学习吧111111222222~~~',
+            '大家好好学习吧22222200000000000~~~'
+        ]
+        var oLi = document.querySelectorAll("#box li");
+        var h2 = document.querySelector("#txt h2");
+        var op = document.querySelector("#txt p");
+
+        for (var i = 0; i < oLi.length; i++) {
+            // 添加一个自定义属性 以便于后面使用
+            oLi[i].setAttribute("index", i);
+            oLi[i].onclick = function () {
+                for (var j = 0; j < oLi.length; j++) {
+                    oLi[j].removeAttribute("class");
+                }
+                this.setAttribute("class", "active");
+
+                // 获取前面定义的自定义属性 index
+                var index = this.getAttribute("index");
+                h2.innerHTML = parseInt(index) + 1 + "月活动";
+                op.innerHTML = arr[index];
+            }
+        }
+    }
+</script>
+
+</html>

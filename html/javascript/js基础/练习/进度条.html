@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>进度条</title>
+    <style>
+        .box {
+            width: 600px;
+            height: 400px;
+            border: 1px solid black;
+            margin: 60px auto;
+            position: relative;
+
+        }
+
+        .box p {
+            margin: 0;
+            position: absolute;
+            left: 0;
+            top: 185px;
+            height: 30px;
+            background-color: green;
+            width: 0px;
+            color: black;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .toast {
+            width: 300px;
+            height: 250px;
+            border: 3px solid #ccc;
+            background-color: #eee;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            box-shadow: 5px 5px 5px green;
+            display: none;
+        }
+
+        .toast em {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: #ccc;
+            text-align: center;
+            line-height: 20px;
+            font-style: normal;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <p><span>50%</span></p>
+        <div class="toast">
+            <span>这是弹窗</span>
+            <em>×</em>
+        </div>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+
+        // 进度条
+        var op = document.querySelector(".box p");
+        var ospan = document.querySelector(".box span");
+        var obox = document.querySelector(".box");
+        var target = obox.clientWidth;
+        var speed = 5;
+
+        var otoast = document.querySelector(".toast");
+        var close = document.querySelector(".toast em");
+        // 存储弹出框的延时器
+        var pBox;
+
+        var t = setInterval(function () {
+            // op.offsetWidth 获取p 标签的显示宽度
+            if (target - op.offsetWidth < speed) {
+                clearInterval(t);
+                ospan.innerText = "100%";
+                op.style.width = "100%";
+
+                // 弹出框
+                otoast.style.display = "block";
+                pBox = setTimeout(function () {
+                    otoast.style.display = "none";
+                }, 3000)
+            } else {
+                ospan.innerText = parseInt(op.offsetWidth / target * 100) + "%";
+                op.style.width = op.offsetWidth + speed + "px";
+            }
+        }, 30)
+
+        close.onclick = function () {
+            otoast.style.display = "none";
+            clearTimeout(pBox);
+        }
+    }
+</script>
+
+</html>
