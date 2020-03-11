@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简易画板</title>
+    <style>
+        #grid {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+            z-index: 1;
+            color: brown;
+        }
+
+        i {
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        input {
+            position: relative;
+            z-index: 1;
+            width: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class=".box"></div>
+    <input type="button" id="add" value="+">
+    <input type="button" id="sub" value="-">
+    <input type="color" id="color">
+    <span id="grid">0 , 0 </span>
+</body>
+<script>
+    window.onload = function () {
+        var objAdd = document.querySelector("#add");
+        var objSub = document.querySelector("#sub");
+        var objColor = document.querySelector("#color");
+        var objGrid = document.getElementById('grid');
+        var width = height = 20;
+        var backColor = "black";
+        // 整个文档加载鼠标移动事件
+        document.onmousemove = function (eve) {
+            // 获取事件对象,兼容ie, ie只能通过 window.event 获取事件对象
+            var event = eve || window.event;
+            var iElement = document.createElement("i");
+
+            document.body.appendChild(iElement);
+            iElement.style.width = width + "px";
+            iElement.style.height = height + "px";
+            iElement.style.backgroundColor = backColor;
+            // event.clientX: 整个可视区域的宽度
+            iElement.style.left = event.clientX + "px";
+            iElement.style.top = event.clientY + "px";
+            objGrid.innerText = event.clientX + ", " + event.clientY;
+        }
+
+        objAdd.onclick = function () {
+            width += 5;
+            height += 5;
+        }
+        objSub.onclick = function () {
+            if (width < 5) {
+                width = height = 5;
+            } else {
+                width -= 5;
+                height -= 5;
+            }
+        }
+
+        objColor.onchange = function () {
+            console.log(objColor.value);
+            backColor = objColor.value;
+        }
+    }
+</script>
+
+</html>

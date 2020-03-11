@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表格即时编辑</title>
+    <style>
+        * {
+            text-align: center;
+            border: 0;
+            font: normal 16px/2 "";
+        }
+
+        .box {
+            margin: 40px auto 0;
+        }
+
+        .box table {
+            border: 1px solid black;
+            /* border-collapse: collapse 边框合并 */
+            border-collapse: collapse;
+        }
+
+        .box td {
+            border: 1px solid black;
+            width: 25%;
+        }
+
+        .box tbody tr td:last-child {
+            cursor: pointer;
+        }
+
+        input {
+            width: 100%;
+            height: 100%;
+        }
+
+        .box tbody tr td:last-child:hover {
+            color: rgb(231, 132, 132);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h2>表格即时编辑</h2>
+        <table border="1" width="500" align="center">
+            <thead>
+                <tr>
+                    <td>姓名</td>
+                    <td>年龄</td>
+                    <td>性别</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="editable">撒金得</td>
+                    <td class="editable">22</td>
+                    <td class="editable">男</td>
+                    <td>删除</td>
+                </tr>
+                <tr>
+                    <td class="editable">小小马</td>
+                    <td class="editable">18</td>
+                    <td class="editable">女</td>
+                    <td>删除</td>
+                </tr>
+                <tr>
+                    <td class="editable">撒金得</td>
+                    <td class="editable">22</td>
+                    <td class="editable">男</td>
+                    <td>删除</td>
+                </tr>
+                <tr>
+                    <td class="editable">撒金得</td>
+                    <td class="editable">22</td>
+                    <td class="editable">男</td>
+                    <td>删除</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var objTd = document.querySelectorAll(".editable");
+        for (var i = 0; i < objTd.length; i++) {
+            objTd[i].onclick = function () {
+                var objInput = document.createElement("input");
+                objInput.value = this.innerText;
+                this.innerHTML = "";
+                this.appendChild(objInput);
+
+                // 输入框获取焦点
+                objInput.focus();
+
+                // 避免点击输入框,触发td的冒泡事件
+                objInput.onclick = function (eve) {
+                    eve = eve || window.event;
+                    // 
+                    eve.stopPropagation();
+                }
+
+                var _this = this;
+                // 触发离焦事件,将修改的元素值设置回去
+                objInput.onblur = function () {
+                    _this.innerHTML = this.value;
+                }
+            }
+        }
+
+        // 删除
+        var deleteTrs = document.querySelectorAll("tbody tr");
+        for (var i = 0; i < deleteTrs.length; i++) {
+            deleteTrs[i].lastElementChild.onclick = function () {
+                this.parentNode.remove();
+            }
+
+        }
+    }
+</script>
+
+</html>

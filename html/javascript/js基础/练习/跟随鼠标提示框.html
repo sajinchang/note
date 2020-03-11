@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 500px;
+            border: 1px solid black;
+            margin: 10px auto;
+        }
+
+        .box h2 {
+            position: relative;
+            padding: 0 10px;
+        }
+
+        .box h2 span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: 10px 0;
+        }
+
+        .box h2 p {
+            margin: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200px;
+            background-color: rgb(213, 233, 159);
+            font: normal 16px/2 "";
+            display: none;
+            z-index: 1;
+            border-radius: 6px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h2>
+            <span>标题1</span>
+            <p>内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1</p>
+        </h2>
+        <h2>
+            <span>标题2</span>
+            <p>内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2</p>
+        </h2>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var objH2s = document.querySelectorAll(".box h2");
+        for (var i = 0; i < objH2s.length; i++) {
+            // 鼠标进入
+            objH2s[i].onmouseover = function () {
+                this.lastElementChild.style.display = "block";
+            }
+            // 鼠标移动
+            objH2s[i].onmousemove = function (eve) {
+                var eve = eve || window.event;
+                this.lastElementChild.style.left = eve.offsetX + 10 + "px";
+                this.lastElementChild.style.top = eve.offsetY + 10 + "px";
+            }
+            // 鼠标离开
+            objH2s[i].onmouseout = function () {
+                this.lastElementChild.style.display = "none";
+            }
+        }
+
+    }
+</script>
+
+</html>
