@@ -1,6 +1,6 @@
-# Pyenv使用
+# Pyenv 使用
 
-## 安装 Pythony依赖
+## 安装 Pythony 依赖
 
 ``` shell
 # centos
@@ -13,7 +13,7 @@ sudo apt-get install libreadline6 libreadline-dev
 sudo apt-get install libsqlite3-dev
 ```
 
-## 安装pyenv
+## 安装 pyenv
 
 ``` shell
 git clone https://gitee.com/mirrors/pyenv.git ~/.pyenv
@@ -23,7 +23,7 @@ echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
 ```
 
-## 安装pyenv virtualenv
+## 安装 pyenv virtualenv
 
 ``` shell
 git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
@@ -58,7 +58,7 @@ rm -rf ~/.pyenv/versions/3.5.5
 
 ## 注意
 
-- 当Ubuntu系统安装完sqlite3报错
+- 当 Ubuntu 系统安装完 sqlite3 报错
     `ImportError: No module named '_sqlite3'`
 
 - 解决方案

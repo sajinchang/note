@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>缓冲运动</title>
+    <style>
+        .box {
+            width: 1000px;
+            height: 100px;
+            border: 1px solid black;
+            margin: 20px auto;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .sub-box {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+        }
+
+        #box1 {
+            background-color: cyan;
+        }
+
+        #box2 {
+            background-attachment: fixed;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="box">
+        <div class="sub-box" id="box1"></div>
+        <div class="sub-box" id="box2"></div>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+
+        var box = document.querySelector("#box");
+        var box1 = document.querySelector("#box1");
+        var box2 = document.querySelector("#box2");
+
+        box.onclick = function () {
+            move(box1, {
+                left: 800,
+                top: 400
+            }, () => alert("运动完成"));
+        }
+
+        box.ondblclick = () => {
+            move(box2, {
+                top: 400
+            }, () => alert("box2"));
+        }
+    }
+
+    function move(ele, obj, callback) {
+        /*
+        ele: dom obj, 运动源,元素
+        obj: 对象, 运动的属性和目标,需要遍历
+        callback: 回调函数
+        */
+        // 每一次运动先停止计时器
+        clearInterval(ele.timer);
+
+        ele.timer = setInterval(function () {
+            var flag = true;
+            for (var i in obj) {
+                var currentStyle = parseInt(getStyle(ele, i));
+                var speed = (obj[i] - currentStyle) / 6;
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                if (currentStyle != obj[i]) {
+                    flag = false;
+                }
+                ele.style[i] = currentStyle + speed + "px";
+                if (flag) {
+                    clearInterval(ele.timer);
+                    callback || callback();
+                }
+            }
+
+        }, 30)
+    }
+
+    function getStyle(ele, attr) {
+        //  获取元素的样式(attr)
+        if (getComputedStyle) {
+            return getComputedStyle(ele, false)[attr]
+        } else {
+            return ele.currentStyle[attr]
+        }
+    }
+</script>
+
+</html>

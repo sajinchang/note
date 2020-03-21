@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拖拽</title>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: green;
+            border: 1px solid black;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .box * {
+            display: block;
+            margin: 5px auto;
+            padding-left: 50px;
+            font: bolder 24px/4 "";
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h2 id="x">X: 0 </h2>
+        <h2 id="y">Y: 0 </h2>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var objBox = document.querySelector(".box");
+        var objX = document.querySelector("#x");
+        var objY = document.querySelector("#y");
+
+        objBox.onmousedown = function (eve) {
+            eve = eve || window.event;
+            // 获取按下鼠标的那一刻鼠标的坐标
+            var x = eve.offsetX;
+            var y = eve.offsetY;
+
+            var width = document.documentElement.clientWidth;
+            var height = document.documentElement.clientHeight;
+            // 注意移动事件和抬起事件要加给document，防止鼠标移动过快，离开当前元素，导致事件失效
+            document.onmousemove = function (eve) {
+                var _eve = eve || window.event;
+                // 计算应该设置的left和top, 作为边界
+                var left = _eve.clientX - x;
+                var top = _eve.clientY - y;
+                if (left < 0) left = 0;
+                if (top < 0) top = 0;
+                if (left > width - objBox.offsetWidth)
+                    left = width - objBox.offsetWidth;
+                if (top > height - objBox.offsetHeight)
+                    top = height - objBox.offsetHeight;
+
+                objBox.style.left = left + "px";
+                objBox.style.top = top + "px";
+                objX.innerText = "X:" + left;
+                objY.innerText = "Y:" + top;
+            }
+
+            document.onmouseup = function () {
+                document.onmousemove = null;
+            }
+        }
+    }
+</script>
+
+</html>

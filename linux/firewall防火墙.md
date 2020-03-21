@@ -52,10 +52,10 @@ firewall-cmd --query-panic
 
 ``` shell
 # 开启一个端口
-firewall-cmd --zone=public --add-port=22/tc --permanent (--permanent: 永久生效,若没有此参数重启失效)
+firewall-cmd --zone=public --add-port=22/tcp --permanent (--permanent: 永久生效,若没有此参数重启失效)
 # 重新载入
 firewall-cmd --reload
-# c查看
+# 查看
 firewall-cmd --zone=public --query-port=22/tcp
 # 删除
 firewall-cmd --zone=public --remove-port=22/tcp --permanent

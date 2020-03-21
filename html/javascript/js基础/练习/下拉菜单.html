@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下拉菜单</title>
+    <style>
+        * {
+            font: normal 22px/2 "";
+            list-style: none;
+        }
+
+        .box {
+            width: 300px;
+            height: 50px;
+            margin: 20px auto;
+        }
+
+        .box span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-indent: 10px;
+            border: 1px solid black;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .box span::after {
+            content: "";
+            display: block;
+            width: 1px;
+            height: 1px;
+            border-top: 10px solid black;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+
+        }
+
+        .box ul {
+            margin: 0;
+            padding: 0;
+            border: 1px solid black;
+            display: none;
+        }
+
+        .box ul li {
+            padding: 0 10px;
+            cursor: pointer;
+        }
+
+        .box ul li.active {
+            background-color: #77F;
+            color: #fff;
+        }
+
+        .note {
+            width: 400px;
+            border: 1px solid black;
+            /* height: 400px; */
+            position: absolute;
+            top: 30px;
+            left: 20px;
+            padding: 0 10px;
+        }
+
+        .note h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="note">
+        <h3>js模拟select下拉菜单</h3>
+        点击菜单,显示下拉框,设置下拉列表的显示状态.
+        点击空白处隐藏,点击某个菜单选中同时隐藏列表,并且模拟键盘事件(up, down, enter)
+    </div>
+    <div class="box">
+        <span id="btn"></span>
+        <ul class="list">
+            <li>上海</li>
+            <li>北京</li>
+            <li>广州</li>
+            <li>深圳</li>
+            <li>苏州</li>
+            <li>成都</li>
+            <li>西安</li>
+        </ul>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var btn = document.getElementById("btn");
+        var objUl = document.querySelector(".list");
+        var objLis = document.querySelectorAll(".list li");
+
+        // ul 是否显示, 默认不显示
+        var DISPALY = false;
+        var INDEX = 0;
+
+        defaultDisplay();
+
+        btn.onclick = function (eve) {
+            eve = eve || window.event;
+            objUl.style.display = "block";
+
+            // 判断显示状态
+            if (!DISPALY) {
+                objUl.style.display = "block";
+                DISPALY = true;
+
+            }
+
+            // 阻止事件冒泡
+            eve.stopPropagation();
+        }
+
+        function defaultDisplay() {
+            // 默认加载显示
+            for (var i = 0; i < objLis.length; i++) {
+                objLis[i].removeAttribute("class");
+            }
+            btn.innerHTML = objLis[INDEX].innerHTML;
+            objLis[INDEX].className = "active";
+
+        }
+
+        document.onclick = function () {
+            // 点击空白隐藏下拉菜单
+            objUl.style.display = "none";
+            DISPALY = false;
+        }
+
+        // 给每个li 添加点击事件
+        for (var i = 0; i < objLis.length; i++) {
+
+            // 添加自定义属性
+            objLis[i].index = i;
+            objLis[i].onclick = function () {
+                INDEX = this.index;
+                btn.innerHTML = this.innerHTML;
+
+            }
+
+            objLis[i].onmouseover = function () {
+                INDEX = this.index;
+
+                // 给当前添加class
+                for (var j = 0; j < objLis.length; j++) {
+                    objLis[j].removeAttribute("class");
+                }
+                this.setAttribute("class", "active");
+            }
+
+        }
+
+        document.onkeydown = function (eve) {
+            // 键盘事件
+            if (DISPALY == false) return false;
+
+            eve = eve || window.event;
+            elif
+            keyCode = eve.keyCode || e.which;
+
+            if (keyCode == 38) {
+                // down
+                if (INDEX == 0) {
+                    INDEX = 0
+                } else {
+                    INDEX--;
+                }
+                defaultDisplay()
+            } else if (keyCode == 40) {
+                // up
+                if (INDEX == objLis.length - 1) {
+                    INDEX = objLis.length - 1;
+                } else {
+                    INDEX++;
+                }
+                defaultDisplay();
+            } else if (keyCode == 13) {
+                // enter
+                objUl.style.display = "none";
+                DISPALY = false;
+                defaultDisplay()
+            }
+
+        }
+    }
+</script>
+
+</html>

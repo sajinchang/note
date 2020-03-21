@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一连串的鼠标随机跟随</title>
+    <style>
+        div {
+            width: 10px;
+            height: 10px;
+            background-color: green;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</body>
+<script>
+    window.onload = function () {
+        var objDivs = document.querySelectorAll('div');
+        document.onmousemove = function (eve) {
+            eve = eve || window.event;
+            // 后面的元素先动, 第一个最后移动
+            for (i = objDivs.length - 1; i > 0; i--) {
+                objDivs[i].style.left = objDivs[i - 1].offsetLeft + random(-10, 10) + "px";
+                objDivs[i].style.top = objDivs[i - 1].offsetTop + random(-10, 10) + "px";
+            }
+            objDivs[0].style.left = eve.pageX + random(-10, 10) + "px";
+            objDivs[0].style.top = eve.pageY + random(-10, 10) + "px";
+        }
+
+    }
+
+    function random(a, b) {
+        // 产生随机数
+        return Math.round(Math.random() * (a - b) + b)
+    }
+</script>
+
+</html>
