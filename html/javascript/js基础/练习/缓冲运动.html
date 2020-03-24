@@ -79,10 +79,11 @@
                     flag = false;
                 }
                 ele.style[i] = currentStyle + speed + "px";
-                if (flag) {
-                    clearInterval(ele.timer);
-                    callback || callback();
-                }
+            }
+
+            if (flag) {
+                clearInterval(ele.timer);
+                callback && callback();
             }
 
         }, 30)

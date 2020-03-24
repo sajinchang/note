@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拖拽进度条</title>
+    <style>
+        .box {
+            width: 500px;
+            height: 50px;
+            border: 1px solid black;
+            display: flex;
+            line-height: 50px;
+            margin: 200px auto;
+        }
+
+        .box em {
+            display: block;
+            width: 50px;
+
+        }
+
+        .box span {
+            width: 40px;
+            display: block
+        }
+
+        .bar {
+            width: 370px;
+            background-color: #ccc;
+            position: relative;
+        }
+
+        .bar p {
+            height: 20px;
+            background-color: red;
+            margin: 0;
+            position: absolute;
+            left: 0;
+            top: 15px;
+            width: 0;
+        }
+
+        .bar p i {
+            width: 20px;
+            height: 40px;
+            position: absolute;
+            top: -10px;
+            background-color: pink;
+            border-radius: 6px;
+            left: 0px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <em>0%</em>
+        <span>0</span>
+        <div class="bar">
+            <p><i></i></p>
+        </div>
+        <span>100</span>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var percent = document.querySelector(".box em");
+        var bar = document.querySelector(".bar");
+        var objP = document.querySelector(".bar p");
+        var objI = document.querySelector(".bar p i");
+
+        objI.onmousedown = function (eve) {
+            eve = eve || window.event;
+            var x = eve.offsetX;
+            document.onmousemove = function (eve) {
+                eve = eve || window.event;
+
+                var len = eve.clientX - x - bar.offsetLeft;
+
+                // 边界
+                if (len <= 0) len = 0;
+                if (len > bar.offsetWidth - objI.offsetWidth) {
+                    len = bar.offsetWidth - objI.offsetWidth;
+                }
+                objI.style.left = len + "px";
+                objP.style.width = len + objI.offsetWidth / 2 + "px";
+                percent.innerHTML = parseInt(len / (bar.offsetWidth - objI.offsetWidth) * 100) + "%";
+
+            }
+
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+
+    }
+</script>
+
+</html>
