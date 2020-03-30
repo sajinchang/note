@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重力运动</title>
+    <style>
+        .box {
+            width: 600px;
+            height: 600px;
+            border: 1px solid black;
+            position: relative;
+            margin: 10px auto;
+        }
+
+        .box #ball {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 250px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div id="ball"></div>
+    </div>
+</body>
+<script src="../public.js"></script>
+<script>
+    var box = document.querySelector(".box");
+    var ball = document.querySelector(".box #ball");
+
+    var speed = random(5, 10);
+    // 向下运动的高度
+    var target = 500;
+    var timer = null;
+    var g = 1;
+
+    var leftSpeed = random(10, 30);
+    var leftTarget = 500;
+
+    console.log(random(5, 10));
+    box.onclick = () => {
+        clearInterval(timer);
+        timer = setInterval(() => {
+            speed += g;
+            var flag = true;
+
+            // 判断下边界
+            if (target - ball.offsetTop <= speed) {
+                ball.style.top = target + "px";
+                speed = -speed * 0.8;
+                if (Math.abs(speed) < 1) {
+                    clearInterval(timer);
+                    flag = false;
+                }
+            } else {
+                ball.style.top = ball.offsetTop + speed + "px";
+            }
+
+            // 限定右边界
+            if (leftTarget - ball.offsetLeft <= leftSpeed) {
+                ball.style.left = leftTarget + "px";
+                leftSpeed = -leftSpeed
+
+            } else if (flag) {
+                ball.style.left = ball.offsetLeft + leftSpeed / 2 + "px";
+            }
+
+            // 限定右边界
+            if (ball.offsetLeft < 0) {
+                ball.style.left = 0;
+                leftSpeed = -leftSpeed
+            } else if (flag) {
+                ball.style.left = ball.offsetLeft + leftSpeed / 2 + "px";
+            }
+
+        }, 30)
+    }
+</script>
+
+</html>

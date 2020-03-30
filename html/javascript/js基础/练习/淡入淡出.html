@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>淡入淡出</title>
+    <style>
+        .box {
+            width: 300px;
+            height: 400px;
+            background: no-repeat center url(../pictures/1.png);
+            margin: 40px auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box"></div>
+</body>
+<script src="../move.js"></script>
+
+<script>
+    var box = document.querySelector(".box");
+
+    var now = 100;
+    var overTarget = 30;
+    var outTarget = 100;
+    var speed = 10;
+    var timer = null;
+
+    box.onmouseover = function () {
+        clearInterval(timer);
+
+        timer = setInterval(() => {
+            if (now == overTarget) {
+                clearInterval(timer);
+            } else {
+                now -= speed;
+                box.style.opacity = now / 100;
+            }
+        }, 30);
+    }
+
+    box.onmouseout = function () {
+        clearInterval(timer);
+
+        timer = setInterval(() => {
+            if (now == outTarget) {
+                clearInterval(timer);
+            } else {
+                now += speed;
+                box.style.opacity = now / 100;
+            }
+        }, 30);
+    }
+</script>
+
+</html>

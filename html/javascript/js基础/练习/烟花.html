@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>烟花</title>
+    <style>
+        #container {
+            width: 100%;
+            height: 739px;
+            /* border: 1px solid black; */
+            background-color: #000;
+            /* margin: 30px auto; */
+            padding: 0;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fire {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            bottom: 0;
+            border-radius: 50%;
+        }
+
+        .small-fire {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+
+</body>
+<script src="../move.js"></script>
+<script src="../public.js"></script>
+<script>
+    // 1. 创建主体烟花, 设置信息
+    // 2. 运动,删除
+    // 3. 创建小烟花, 设置信息
+    // 4. 运动,删除
+    function Fire(cont, position) {
+        this.cont = cont;
+        this.x = position.x;
+        this.y = position.y;
+        this.init()
+
+    }
+
+    Fire.prototype.init = function () {
+        // 创建主体烟花
+        this.fire = document.createElement("div");
+        this.fire.style.left = this.x + "px";
+        this.fire.setAttribute("class", "fire");
+        this.cont.appendChild(this.fire);
+        this.fire.style.background = randomColor();
+
+        // 运动
+        this.fireMove()
+    }
+
+    Fire.prototype.fireMove = function () {
+        move(this.fire, {
+            top: this.y
+        }, () => {
+            // 删除主体烟花
+            this.fire.remove();
+            // 创建小烟花
+            this.smallFire();
+        })
+    }
+
+    Fire.prototype.smallFire = function () {
+        var smallFireNum = random(10, 20);
+
+        for (var i = 0; i < smallFireNum; i++) {
+            // ES5 之前, 使用匿名函数实现局部作用域
+            var div = document.createElement("div");
+            div.className = "small-fire";
+            div.style.cssText = `left: ${this.x}px; top: ${this.y}px; background: ${randomColor()}`
+
+            this.cont.appendChild(div);
+            var pos = {
+                x: random(0, this.cont.offsetWidth - div.offsetWidth),
+                y: random(0, this.cont.offsetHeight - div.offsetHeight)
+            };
+            // 注意.匿名函数之前必须有 `;`
+            // 小烟花运动
+            (function(tmp){
+                move(tmp, {
+                left: pos.x,
+                top: pos.y
+            }, function () {
+                tmp.remove()
+            })
+            })(div)
+
+
+            // ES5 利用bind方法将div传入回调函数
+            // var div = document.createElement("div");
+            // div.className = "small-fire";
+            // div.style.cssText = `left: ${this.x}px; top: ${this.y}px; background: ${randomColor()}`
+
+            // this.cont.appendChild(div);
+            // var pos = {
+            //     x: random(0, this.cont.offsetWidth - div.offsetWidth),
+            //     y: random(0, this.cont.offsetHeight - div.offsetHeight)
+            // }
+            // // 小烟花运动
+            // move(div, {
+            //     left: pos.x,
+            //     top: pos.y
+            // }, function () {
+            //     this.remove()
+            // }.bind(div))
+
+
+            // ES6 let实现局部作用域
+            // let div = document.createElement("div");
+            // div.className = "small-fire";
+            // div.style.cssText = `left: ${this.x}px; top: ${this.y}px; background: ${randomColor()}`
+
+            // this.cont.appendChild(div);
+            // var pos = {
+            //     x: random(0, this.cont.offsetWidth - div.offsetWidth),
+            //     y: random(0, this.cont.offsetHeight - div.offsetHeight)
+            // }
+            // // 小烟花运动
+            // move(div, {
+            //     left: pos.x,
+            //     top: pos.y
+            // }, function () {
+            //     div.remove()
+            // })
+
+        }
+
+    }
+
+    function randomColor() {
+        return `rgb(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)})`
+    }
+
+    var container = document.getElementById("container");
+
+    container.onclick = function (eve) {
+        eve = eve || window.event;
+        var position = {
+            x: eve.clientX - this.offsetLeft,
+            y: eve.clientY - this.offsetTop
+        }
+
+        new Fire(this, position)
+
+    }
+</script>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>折叠菜单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 400px;
+            height: 100px;
+            position: relative;
+            top: 500px;
+            left: -400px;
+        }
+
+        .content {
+            width: 400px;
+            height: 300px;
+            background-color: #ccc;
+            position: absolute;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+        }
+
+        .content span {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            display: block;
+        }
+
+        .bar {
+            width: 400px;
+            height: 100px;
+            background-color: #0aa;
+
+        }
+
+        .pos {
+            width: 20px;
+            height: 100px;
+            background-color: purple;
+            position: absolute;
+            right: -20px;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="content">
+            <span>X</span>
+            内容
+
+        </div>
+        <div class="bar">长条</div>
+        <div class="pos">显示</div>
+    </div>
+</body>
+<script src="../move.js"></script>
+<script src="../public.js"></script>
+<script>
+    var box = document.querySelector(".box");
+    var content = document.querySelector(".content");
+    var span = document.querySelector(".content span");
+    var beginLeft = getStyle(box, 'left');
+    box.onmouseover = () => {
+        move(box, {
+            left: 0
+        }, () => {
+            move(content, {
+                top: -300,
+                height: 300
+            })
+        })
+    }
+    span.onclick = () => {
+        move(content, {
+            height: 0,
+            top: 0
+        }, () => {
+            move(box, {
+                left: parseInt(beginLeft)
+            })
+        })
+    }
+</script>
+
+</html>

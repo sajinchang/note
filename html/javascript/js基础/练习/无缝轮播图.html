@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无缝轮播图</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .box {
+            width: 1200px;
+            height: 350px;
+            border: 1px solid black;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .box ul {
+            position: absolute;
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
+        .box ul li {
+            width: 1200px;
+            list-style: none;
+            height: 350px;
+            display: block;
+            overflow: hidden;
+            float: left;
+        }
+
+        .box .banner .pic:nth-child(1) {
+            z-index: 1;
+
+        }
+
+        .btn input {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(100, 150, 150, 1);
+            z-index: 999;
+            top: 150px;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        #left {
+            left: 0;
+        }
+
+        #right {
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <ul class="banner">
+            <li class="pic" style="background-color: red;"></li>
+            <li class="pic" style="background-color: green;;"></li>
+            <li class="pic" style="background-color: purple;"></li>
+            <li class="pic" style="background-color: yellow;"></li>
+            <li class="pic" style="background-color: red;"></li>
+        </ul>
+        <div class="btn">
+            <input type="button" value="<<<" id="left">
+            <input type="button" value=">>>" id="right">
+        </div>
+    </div>
+
+</body>
+<script src="../move.js"></script>
+<script>
+    function Banner() {
+        this.left = document.getElementById("left");
+        this.right = document.getElementById("right");
+        this.left = document.getElementById("left");
+        this.ul = document.querySelector(".banner");
+        this.li = this.ul.children;
+
+        this.index = 0
+        this.init()
+        this.timer = null;
+    }
+
+    Banner.prototype.init = function () {
+        this.ul.style.width = this.li.length * this.li[0].offsetWidth + "px";
+
+        var _this = this;
+
+        this.right.onclick = function () {
+            _this.ctrl = "right";
+            _this.changeIndex();
+        }
+
+        this.timer = (() => {
+            _this.ctrl = "right";
+            _this.changeIndex();
+
+        }, 5000);
+
+        this.left.onclick = function () {
+            _this.ctrl = "left";
+            _this.changeIndex()
+        }
+    }
+
+    Banner.prototype.changeIndex = function () {
+        if (this.ctrl == "right") {
+
+            if (this.index == this.li.length - 1) {
+                this.ul.style.left = 0;
+                // 下一轮从第一个开始
+                this.index = 1;
+            } else {
+                this.index++;
+            }
+        } else if (this.ctrl == "left") {
+            if (this.index == 0) {
+                this.ul.style.left = -this.ul.offsetWidth + "px";
+                // 下一轮从第一个开始
+                this.index = this.li.length - 2;
+            } else {
+                this.index--;
+            }
+        }
+        console.log(this.index);
+
+        this.display(this.ctrl);
+    }
+
+    Banner.prototype.display = function () {
+        if (this.ctrl == "right") {
+
+            move(this.ul, {
+                left: -this.li[0].offsetWidth * this.index
+            })
+        } else if (this.ctrl == "left") {
+            move(this.ul, {
+                left: -this.li[0].offsetWidth * this.index
+            })
+        }
+
+    }
+
+    new Banner()
+</script>
+
+</html>

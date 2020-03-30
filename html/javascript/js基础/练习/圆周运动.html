@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圆周运动</title>
+    <style>
+        .box {
+            width: 10px;
+            height: 10px;
+            background-color: purple;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="box"></div> -->
+</body>
+<script>
+    // 当前位置
+    var now = 0;
+    var target = 360;
+
+    var speed = 10;
+    var r = 200;
+    var timer = null;
+
+    timer = setInterval(() => {
+        if (now === target) {
+            clearInterval(timer);
+        } else {
+            // 转过的角度
+            now += speed;
+            var box = document.createElement("div");
+            box.setAttribute("class", "box");
+            box.style.left = 300 + r * Math.cos(Math.PI / 180 * now) + "px";
+            box.style.top = 300 + r * Math.sin(Math.PI / 180 * now) + "px";
+            document.body.appendChild(box);
+        }
+
+    }, 30);
+</script>
+
+</html>
