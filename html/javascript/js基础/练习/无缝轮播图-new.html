@@ -5,10 +5,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>无缝轮播图</title>
+    <style>
+        .box {
+            width: 1130px;
+            height: 300px;
+            border: 1px solid black;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box a {
+            position: absolute;
+            top: 0;
+            left: 1130px;
+        }
+
+        .box a:nth-child(1) {
+            left: 0;
+        }
+
+        .box a img {
+            width: 1130px;
+            height: 300px;
+        }
+
+        .btns input {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(200, 200, 200, 0.8);
+            top: 130px;
+            z-index: 999999999;
+        }
+
+        #left {
+            left: 0;
+        }
+
+        #right {
+            right: 0;
+        }
+    </style>
 </head>
 
 <body>
-
+    <div class="box">
+        <a href="#"><img src="../pictures/temp/1.jpg" alt=""></a>
+        <a href="#"><img src="../pictures/temp/2.jpg" alt=""></a>
+        <a href="#"><img src="../pictures/temp/3.jpg" alt=""></a>
+        <a href="#"><img src="../pictures/temp/4.jpg" alt=""></a>
+        <a href="#"><img src="../pictures/temp/5.jpg" alt=""></a>
+        <div class="btns">
+            <input type="button" value="<<<" id="left">
+            <input type="button" value=">>>" id="right">
+        </div>
+    </div>
 </body>
+<script src="../move.js"></script>
+<script>
+    function Banner() {
+        this.left = document.getElementById("left");
+        this.right = document.getElementById("right");
+        this.items = document.querySelectorAll(".box a");
+
+        // 下次要进来的索引
+        this.index = 0;
+        // 要离开的索引
+        this.indexPrev = this.items.length - 1;
+        this.timer = null;
+        this.init()
+    }
+
+    Banner.prototype.init = function () {
+        // 初始化, 添加点击事件
+        var _this = this;
+        this.left.onclick = function () {
+            // 移动, 计算索引, 传入方向
+            _this.direct = -1;
+            _this.changeIndex();
+
+        }
+
+        this.right.onclick = function () {
+            _this.direct = 1;
+            _this.changeIndex()
+
+        }
+
+        this.timer = setInterval(function () {
+            _this.direct = 1;
+            _this.changeIndex()
+            
+        }, 5000)
+
+    }
+
+    Banner.prototype.changeIndex = function () {
+        if (this.direct == -1) {
+            // 点击左侧按钮
+            if (this.index == 0) {
+                this.index = this.items.length - 1;
+                this.indexPrev = 0;
+            } else {
+                this.index--;
+                this.indexPrev = this.index + 1;
+            }
+        } else {
+            // 右边按钮
+            if (this.index == this.items.length - 1) {
+                this.index = 0;
+                this.indexPrev = this.items.length - 1;
+            } else {
+                this.index++;
+                this.indexPrev = this.index - 1;
+            }
+        }
+        // console.log(this.index, this.indexPrev);
+
+        this.display();
+    }
+
+    Banner.prototype.display = function () {
+        this.items[this.indexPrev].style.left = 0;
+        move(this.items[this.indexPrev], {
+            left: -this.items[0].offsetWidth * this.direct
+        })
+
+        // this.items[index].style.left = this.items[0].offsetWidth * this.direct + "px";
+        this.items[this.index].style.left = 1130 * this.direct + "px";
+        move(this.items[this.index], {
+            left: 0
+        })
+    }
+
+    new Banner();
+</script>
 
 </html>

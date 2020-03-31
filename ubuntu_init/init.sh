@@ -2,7 +2,7 @@
 
 # ubuntu 系统初始化
 
-read -s -p "enter the sudo password:" PASSWORD
+# read -s -p "enter the sudo password:" PASSWORD
 
 # sudo apt-key adv --recv --keyserver keyserver.ubuntu.com KEY
 
@@ -31,11 +31,11 @@ install_onmyzsh() {
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
     chsh -s /usr/bin/zsh
-    ehco "oh-my-zsh 安装完成"
+    echo "oh-my-zsh 安装完成"
 }
 
 install_pyenv() {
-    ehco "安装pyenv"
+    echo "安装pyenv"
     git clone https://gitee.com/mirrors/pyenv.git ~/.pyenv
     git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
     echo "pyenv 安装完成"
@@ -47,7 +47,7 @@ copy_profile() {
     cp ./doc/zshrc $HOME/.zshrc
 }
 
-install_python() {
+install_python() {xia
     if [ ! pyenv versions | grep 3.6.7 ] >/dev/null; then
         pyenv install 3.6.7
         echo -e "python 3.6.7 安装完成"
@@ -68,6 +68,7 @@ install_all() {
 cat <<EOF
 请输入要执行的操作的编号: [1-9]
 ===============================
+安装chrome等办公软件,请先复制./doc 问价夹下软件源到/etc/apt/下
 【 1 】 系统更新
 【 2 】 安装软件
 【 3 】 安装 oh-my-zsh
