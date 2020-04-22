@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瀑布流</title>
+    <style>
+        .cont {
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .box {
+            float: left;
+            padding: 6px;
+        }
+
+        .box .img-box {
+            border: 1px solid black;
+            border-radius: 6px;
+            padding: 6px;
+
+        }
+
+        .img-box img {
+            width: 200px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/0.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/1.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/2.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/3.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/4.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/5.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/6.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/45.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/26.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/25.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/113.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/98.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/90.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/101.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/104.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/101.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/128.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/117.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/119.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/125.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/0.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/1.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/2.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/3.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/4.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/5.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/6.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/45.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/26.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/25.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/113.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/98.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/90.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/101.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/104.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/101.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/128.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/117.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/119.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/125.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/0.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/1.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/2.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/3.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/4.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/5.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/6.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/45.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/26.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/25.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/113.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/98.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/90.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/101.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/104.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/101.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/128.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/117.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/119.jpg" alt="">
+            </div>
+        </div>
+        <div class="box">
+            <div class="img-box">
+                <img src="../../../pictures/pic/125.jpg" alt="">
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    function WaterFlow() {
+        // 瀑布流
+        this.cont = document.querySelector(".cont");
+        // this.box = document.querySelectorAll(".box");
+        // this.imgBox = document.querySelector()
+        this.clientW = document.documentElement.clientWidth;
+
+        this.data = [
+            {
+                src: "../../../pictures/pic2/1.jpg"
+            },
+            {
+                src: "../../../pictures/pic2/28.jpg"
+            },
+            {
+                src: "../../../pictures/pic2/22.jpg"
+            },
+            {
+                src: "../../../pictures/pic2/89.jpg"
+            },
+            {
+                src: "../../../pictures/pic2/59.jpg"
+            },
+            {
+                src: "../../../pictures/pic2/85.jpg"
+            },
+            {
+                src: "../../../pictures/pic2/101.jpg"
+            },
+        ]
+
+        // this.heightArr = new Array();
+
+        // 完善布局
+        this.init();
+        // 添加事件
+        this.addEvent();
+    }
+
+    WaterFlow.prototype.init = function () {
+        this.box = document.querySelectorAll(".box");
+        this.heightArr = new Array();
+
+        this.maxNum = parseInt(this.clientW / this.box[0].offsetWidth);
+        this.cont.style.width = this.maxNum * this.box[0].offsetWidth + "px";
+
+        // 第一行和其他的行单独处理
+        this.firstLine();
+
+        this.otherLine();
+
+    }
+
+    WaterFlow.prototype.firstLine = function () {
+        for (var i = 0; i < this.maxNum; i++) {
+            this.heightArr.push(this.box[i].offsetHeight);
+        }
+    }
+
+    WaterFlow.prototype.otherLine = function () {
+        for (var i = this.maxNum; i < this.box.length; i++) {
+            // 获取最小高度
+            var minHeight = getMin(this.heightArr);
+            var minIndex = this.heightArr.indexOf(minHeight);
+            // 设置定位 
+            this.box[i].style.position = "absolute";
+            this.box[i].style.top = minHeight + "px";
+            this.box[i].style.left = minIndex * this.box[0].offsetWidth + "px";
+
+            // 修改最小高度
+            this.heightArr[minIndex] += this.box[i].offsetHeight;
+        }
+    }
+
+    WaterFlow.prototype.addEvent = function () {
+
+        var _this = this;
+
+        var clientH = document.documentElement.clientHeight;
+
+        onscroll = function () {
+            // 最后一个元素的top
+            var lastTop = _this.box[_this.box.length - 1].offsetTop;
+            // 滚动高度
+            var scrollT = document.documentElement.scrollTop;
+            console.log(lastTop, scrollT, clientH);
+            // return false;
+            if (lastTop <= scrollT + clientH) {
+                _this.display();
+            }
+        }
+    }
+
+    WaterFlow.prototype.display = function () {
+        var str = ""
+        for (var i = 0; i < this.data.length; i++) {
+            str += `<div class="box">
+            <div class="img-box">
+                <img src="${this.data[i].src}" alt="">
+            </div>
+        </div>`
+
+        }
+        this.cont.innerHTML += str;
+
+        this.init();
+    }
+
+    function getMin(arr) {
+        var newArr = JSON.parse(JSON.stringify(arr));
+        return newArr.sort((a, b) => {
+            return a - b;
+        })[0]
+    }
+    window.onload = function () {
+        new WaterFlow()
+
+    }
+</script>
+
+</html>

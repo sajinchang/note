@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>放大镜</title>
+    <style>
+        .box {
+            width: 400px;
+            height: 530px;
+            position: absolute;
+            left: 50px;
+            top: 100px;
+        }
+
+        .box img {
+            width: 400px;
+            height: 530px;
+        }
+
+        .box span {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: rgba(200, 230, 200, 0.6);
+            display: none;
+        }
+
+        .box p {
+            width: 500px;
+            height: 530px;
+            margin: 0;
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            top: 0;
+        }
+
+        .big-box {
+            width: 400px;
+            position: absolute;
+            left: 500px;
+            top: 100px;
+            height: 530px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .big-box img {
+            width: 1200px;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <img src="../pictures/放大镜.jpg" alt="">
+        <span></span>
+        <p></p>
+    </div>
+    <div class="big-box">
+        <img src="../pictures/放大镜.jpg" alt="">
+    </div>
+
+</body>
+<script src="../public.js"></script>
+<script>
+    window.onload = function () {
+        new Magnifier();
+    }
+
+
+    function Magnifier() {
+        // 放大镜
+        this.box = document.querySelector(".box");
+        this.img = document.querySelector(".box img");
+        this.span = document.querySelector(".box span");
+        this.bigBox = document.querySelector(".big-box");
+        this.bigImg = document.querySelector(".big-box img");
+
+        // 绑定事件
+        this.addEvent();
+    }
+
+    Magnifier.prototype.init = function () {
+        // 计算比例
+        var wProp = this.bigBox.offsetWidth / this.bigImg.offsetWidth;
+        var hProp = this.bigBox.offsetHeight / this.bigImg.offsetHeight;
+
+        // 设置span的宽高
+        this.span.style.width = this.box.offsetWidth * wProp + "px";
+        this.span.style.height = this.box.offsetHeight * hProp + "px";
+        // console.log(this.span)
+    }
+
+    Magnifier.prototype.addEvent = function () {
+
+        var _this = this;
+        addEvent(this.box, "mouseover", function () {
+            // 进入, 首先补充布局
+            _this.span.style.display = "block";
+            _this.bigBox.style.display = "block";
+            _this.init();
+            // console.log(this);
+        });
+
+        addEvent(this.box, "mouseout", function () {
+            // 离开
+            _this.span.style.display = "none";
+            _this.bigBox.style.display = "none";
+
+        });
+
+        addEvent(this.box, "mousemove", function (eve) {
+            eve = eve || window.event;
+            // 移动
+            // 尺寸计算坐标
+            // span 移动
+            // this.span.style.left = eve.clientX - this.span.offsetWidth / 2 - this.box.offsetLeft + "px";
+            // this.span.style.top = eve.clientY - this.span.offsetHeight / 2 - this.box.offsetTop + "px";
+            var l = eve.offsetX - this.span.offsetWidth / 2;
+            var t = eve.offsetY - this.span.offsetHeight / 2;
+            // 边界限定
+            if (l < 0) l = 0;
+            if (t < 0) t = 0;
+
+            var tempX = this.box.offsetWidth - this.span.offsetWidth;
+            var tempY = this.box.offsetHeight - this.span.offsetHeight;
+            if (l > tempX) l = tempX;
+            if (t > tempY) t = tempY;
+
+
+            // 计算比例
+            var x = l / tempX;
+            var y = t / tempY;
+            this.span.style.left = l + "px";
+            this.span.style.top = t + "px";
+            console.log(this.bigImg.offsetWidth - this.bigBox.offsetWidth);
+            this.bigImg.style.left = -x * (this.bigImg.offsetWidth - this.bigBox.offsetWidth) + "px";
+            this.bigImg.style.top = -y * (this.bigImg.offsetHeight - this.bigBox.offsetHeight) + "px";
+            // console.log(l);
+        }.bind(this));
+    }
+</script>
+
+</html>

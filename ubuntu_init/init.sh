@@ -47,8 +47,8 @@ copy_profile() {
     cp ./doc/zshrc $HOME/.zshrc
 }
 
-install_python() {xia
-    if [ ! pyenv versions | grep 3.6.7 ] >/dev/null; then
+install_python() {
+    if ! pyenv versions | grep 3.6.7  >/dev/null; then
         pyenv install 3.6.7
         echo -e "python 3.6.7 安装完成"
     else

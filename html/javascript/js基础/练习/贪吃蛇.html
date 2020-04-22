@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇</title>
+</head>
+
+<body>
+
+</body>
+<script src="../public.js"></script>
+<script>
+    // 地图
+    function Map() {
+        this.w = 800;
+        this.h = 400;
+        this.c = '#CCC';
+        this.init();
+    }
+
+    Map.prototype.init = function () {
+        this.m = document.createElement("div");
+        this.m.style.cssText = `width: ${this.w}px; height: ${this.h}px; background: ${this.c};
+        position: relative; margin: 0 auto;`;
+
+        document.body.appendChild(this.m);
+    }
+
+    function Food() {
+        // 食物
+        this.w = 20;
+        this.h = 20;
+        this.c = "red";
+
+        this.init();
+    }
+
+    Food.prototype = {
+        constructor: Food,
+        init: function () {
+            this.div = document.createElement("div");
+            this.div.style.cssText = `width: ${this.w}px; height: ${this.h}px; background: ${this.c};
+        position: absolute; margin: 0 auto;`;
+            map.m.appendChild(this.div);
+
+            this.random();
+        },
+        random: function () {
+            this.x = random(0, map.w / this.w - 1);
+            this.y = random(0, map.h / this.h - 1);
+
+            this.div.style.left = this.x * this.w + "px";
+            this.div.style.top = this.y * this.h + "px";
+        }
+
+    }
+
+    function Snake() {
+        this.w = 20;
+        this.h = 20;
+        this.body = [{
+            x: 6,
+            y: 3,
+            c: "yellowgreen"
+        }, {
+            x: 5,
+            y: 3,
+            c: "green"
+        }, {
+            x: 4,
+            y: 3,
+            c: "yellow"
+        }];
+
+        // 方向
+        this.direct = "right";
+
+        this.init();
+
+    }
+
+    Snake.prototype.init = function () {
+        for (var i = 0; i < this.body.length; i++) {
+            // 创建之前先行判断,防止重复创建
+            if (!this.body[i].s) {
+                this.body[i].s = document.createElement('div');
+                this.body[i].s.style.cssText = `width: ${this.w}px; height: ${this.h}px;
+                background: ${this.body[i].c}; position: absolute`;
+                map.m.appendChild(this.body[i].s)
+            }
+
+            // 如果已经创建,只设置位置 
+            this.body[i].s.style.left = this.body[i].x * this.w + "px";
+            this.body[i].s.style.top = this.body[i].y * this.h + "px";
+
+        }
+        // 给蛇头部和尾部添加标志
+        this.body[0].s.innerHTML = '0';
+        this.body[this.body.length - 1].s.innerHTML = '-';
+
+        // 延时行走, 时间决定难度
+        setTimeout(function () {
+            this.move();
+        }.bind(this), 300);
+
+    }
+
+    Snake.prototype.move = function () {
+        // 先将尾巴向前移动,以此类推
+        for (var i = this.body.length - 1; i > 0; i--) {
+            this.body[i].x = this.body[i - 1].x;
+            this.body[i].y = this.body[i - 1].y;
+        }
+        // 蛇头根据方向向前走
+        switch (this.direct) {
+            case "left":
+                this.body[0].x -= 1;
+                break;
+            case "top":
+                this.body[0].y -= 1
+                break;
+            case "right":
+                this.body[0].x += 1;
+                break;
+            case "bottom":
+                this.body[0].y += 1;
+                break;
+        }
+        // 碰到食物,食物位置更新, 蛇节增加一个, 放在尾巴的位置上
+        if (this.body[0].x == food.x && this.body[0].y == food.y) {
+            food.random();
+            var last = {
+                x: this.body[this.body.length - 1].x,
+                y: this.body[this.body.length - 1].y
+            };
+
+            this.body.push({
+                x: last.x,
+                y: last.y,
+                c: randomColor()
+            })
+        }
+
+        // 边界限定
+        if (this.body[0].x < 0 || this.body[0].y < 0 || this.body[0].x > 39 || this.body[0].y > 19) {
+            alert('撞墙死了');
+            return false;
+        }
+        // 撞自己的身体死亡
+        for (var i = 1; i < this.body.length; i++) {
+            if (this.body[0].x == this.body[i].x && this.body[0].y == this.body[i].y) {
+                alert("撞自己死");
+                return;
+            }
+        }
+
+        // 以上其实只是在改变坐标,并没有重新生成蛇的位置,需要重新执行init渲染蛇的真实位置
+        this.init();
+    }
+
+    Snake.prototype.direction = function (code) {
+        switch (code) {
+            case 37:
+                this.direct = "left";
+                break;
+            case 38:
+                this.direct = 'top';
+                break;
+            case 39:
+                this.direct = "right";
+                break;
+            case 40:
+                this.direct = 'bottom';
+                break;
+
+        }
+    }
+
+    function randomColor() {
+        return `rgb(${random(0,255)},${random(0,255)},${random(0,255)})`
+    }
+    map = new Map();
+    food = new Food();
+    snake = new Snake();
+
+    document.onkeydown = function (eve) {
+        var eve = eve || window.event;
+        var code = eve.keyCode || eve.which;
+
+        snake.direction(code);
+    }
+</script>
+
+</html>
