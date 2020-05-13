@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象的单体模式</title>
+</head>
+
+<body>
+    <script>
+        var person = {
+            'name': 'sam',
+            'age': 18,
+            '_fav': function () {
+                console.log(this);
+            },
+
+            // 对象的单体模式,他等价于上面的写法
+            fav() {
+                console.log(this);
+            }
+        }
+        person._fav();
+        person.fav();
+    </script>
+</body>
+
+</html>

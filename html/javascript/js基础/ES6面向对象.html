@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6面向对象</title>
+</head>
+
+<body>
+    <script>
+        class Animal {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+
+            showInfo() {
+                console.log(`my name is ${this.name}, i am ${this.age} years old!`)
+            }
+        }
+        var dog = new Animal('Sam', '23');
+        dog.showInfo();
+
+    </script>
+</body>
+
+</html>
