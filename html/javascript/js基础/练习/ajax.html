@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax练习</title>
+</head>
+
+<body>
+
+</body>
+<script src="../ajax.js"></script>
+<script>
+    // get 
+    // var url = 'http://127.0.0.1:8000/user/'
+    // ajaxGet(url, {}, function (data) {
+    //     document.write(data);
+    //     data = JSON.parse(data);
+    //     console.log(data);
+    //     console.log(typeof data);
+    // })
+
+    
+    // post
+    var url = 'http://127.0.0.1:8000/api/login'
+    ajaxPost(url, {}, function (data) {
+        document.write(data);
+        data = JSON.parse(data);
+        console.log(data);
+        console.log(typeof data);
+    })
+</script>
+
+</html>

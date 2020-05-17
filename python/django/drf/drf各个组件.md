@@ -439,6 +439,88 @@ class UserView(ModelViewSet):
 
 ## 视图
 
+```python
+# 最原始的view, 长用
+from rest_framework.views import APIView
+
+class UserView(APIView):
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def put(self, request, *args, **kwargs):
+        pass
+
+    def patch(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        pass
+
+    def delete(self, request, *args, **kwargs):
+        pass
+```
+
+```python
+# 第二个级别的view, 可以自己定义请求方式默认的方法
+from rest_framework.viewsets import GenericViewSet
+
+class UserView(GenericViewSet):
+    serializer_class = serializer.UserSerializer
+    queryset = User.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_queryset()
+        ser = self.get_serializer(instance=obj, many=True)
+        response = CommonResponse(data=ser.data)
+        return Response(response.content)
+
+# ---------------------------------------------------------------------------
+urlpatterns = [
+    url(r'^user', views.UserView.as_view({'get': 'get'}), name='user')
+    # url(r'^user', views.UserView.as_view({'get': 'list'}), name='user')
+]
+
+```
+
+```python
+from rest_framework.mixins import DestroyModelMixin
+from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import UpdateModelMixin
+from rest_framework.mixins import RetrieveModelMixin
+from rest_framework.mixins import ListModelMixin
+
+from rest_framework.viewsets import ModelViewSet
+
+"""
+ModelViewSet 继承DestroyModelMixin
+                CreateModelMixin: 新增一条数据(post)
+                UpdateModelMixin
+                RetrieveModelMixin: 返回一条数据的详情(get)
+                ListModelMixin : 返回列表数据(get)
+"""
+# 自己进行增删改查
+class UserView(ModelViewSet):
+    # 序列化类
+    serializer_class = serializer.UserSerializer
+    # list 查询queryset, 适合简单的增删改查
+    queryset = User.objects.all()
+
+# ----------------------------------------------------------------
+from rest_framework import routers
+from app import views
+# 路由
+router = routers.SimpleRouter()
+router.register(r'user', views.UserView)
+urlpatterns = [
+    url(r'^', include(router.urls, namespace='user'))
+    # 生成下面两种规则的url, 自己处理请求
+    # http://127.0.0.1:8000/user/1/
+    # http://127.0.0.1:8000/user
+    # ^user/$ [name='user-list']
+    # ^user/(?P<pk>[^/.]+)/$ [name='user-detail']
+]
+```
+
 ## 渲染器
 
 > 使用渲染器，需要在 settings 文件中安装`rest_framework`
@@ -457,3 +539,68 @@ class BookView(ModelViewSet):
 ```
 
 ## 分页
+
+```python
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.pagination import CursorPagination
+
+
+
+class MyPage(PageNumberPagination):
+    """http://127.0.0.1:8000/user/?page=1&size=10"""
+    # 每页返回多少条
+    page_size = 2
+    # 设置分页的参数名
+    page_query_param = 'page'
+    # 设置每页返回数据量的参数名
+    page_size_query_param = 'size'
+    # 设置每页最大返回的条数
+    max_page_size = 6
+
+
+class MyPage(LimitOffsetPagination):
+    """http://127.0.0.1:8000/user/?limit=10&offset=0"""
+    default_limit = 2
+    limit_query_param = 'limit'
+    offset_query_param = 'offset'
+    max_limit = 6
+
+
+class MyPage(CursorPagination):
+    """http://127.0.0.1:8000/user/?cursor=cD01"""
+    # cursor 参数名称
+    cursor_query_param = 'cursor'
+    # 每页数量
+    page_size = 4
+    # 返回数据市的排序的方式
+    ordering = '-id'
+
+    max_page_size = 1
+    page_size_query_param = 'size'
+
+    def get_paginated_response(self, data):
+        """
+        该方法默认返回 rest framework 的Response
+        重写返回一个字典, 包括分页的一些信息
+        :param data:
+        :return:
+        """s
+
+
+class UserView(GenericViewSet):
+    serializer_class = serializer.UserSerializer
+    queryset = User.objects.all()
+    pagination_class = MyPage
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_queryset()
+        # page = self.paginate_queryset(obj)
+        page = self.pagination_class()
+        page_data = page.paginate_queryset(obj, request=request, view=self)
+
+        ser = self.get_serializer(instance=page_data, many=True)
+        response = CommonResponse(data=page.get_paginated_response(data=ser.data))
+        return Response(response.content)
+
+```
